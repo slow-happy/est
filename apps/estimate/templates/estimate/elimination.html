@@ -1,0 +1,107 @@
+{% extends "estimate/base.html" %}
+{% block title %} estimate {% endblock %}
+{% block content %}
+<div>
+    <h4>버전별 판매계획입력</h4>
+    <p>업로드하려는 파일을 선택해 주세요</p>
+    <form action="{{ url_for('est.elimination') }}"
+        method="POST"
+        enctype="multipart/form-data"
+        novalidate="novalidate">
+        {{ form.csrf_token }}
+        <!-- <div>
+            <label>버전 : {{ form.version }}</label>
+            <p></p>
+        </div> -->
+        <div>
+            <select name="ver" class="Input">
+                {% for ver in ver1 %}
+                <option value="{{ ver[0] }}">{{ ver[0] }}</option>
+                {% endfor %}
+            </select>
+        
+            <label>
+                <span>{{ form.image(class="form-control-file") }}</span>
+            </label>
+        {% for error in form.image.errors %}
+        <span style="color: red;">{{error}}</span>
+        {% endfor %}
+            <button type="submit" class="btn btn-info"> 연결제거항목입력 </button>
+        </div>
+        <hr />
+        <br><br>
+    </form>
+</div>
+<table>
+    <tbody>      
+        <td>
+        <div> 
+            <form action="{{ url_for('est.cal_eli') }}"
+                method="POST"
+                enctype="multipart/form-data"
+                novalidate="novalidate">
+                {{ form.csrf_token }}
+                    <button type="submit" class="btn btn-info"> 연결대상계산 </button>
+            </form>
+        </div>
+        </td>
+        <td><div>
+            <form action="{{ url_for('est.elimination') }}"
+                method="POST"
+                enctype="multipart/form-data"
+                novalidate="novalidate">
+                {{ form.csrf_token }}
+                    <button type="submit" class="btn btn-info"> 개별항목추가 </button>
+            </form>
+        </div></td>
+        <td>
+            <div> 
+                <form action="{{ url_for('est.sendToMain') }}"
+                    method="POST"
+                    enctype="multipart/form-data"
+                    novalidate="novalidate">
+                    {{ form.csrf_token }}
+                        <button type="submit" class="btn btn-success"> 확정(메인화면으로 전송) </button>
+                </form>
+            </div>
+        </td>
+        <td>
+            <div> 
+                <form action="{{ url_for('est.cal_init') }}"
+                    method="POST"
+                    enctype="multipart/form-data"
+                    novalidate="novalidate">
+                    {{ form.csrf_token }}
+                        <button type="submit" class="btn btn-light"> 초기화 </button>
+                </form>
+            </div>
+        </td>
+    </tbody>
+</table>
+
+
+<div>
+    <table class="table table-striped table-hover">
+        <thead class="table-dark">
+            <tr>
+                {%for th in header[1:] %}
+                <td>{{ th }}</td>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {%for tr in result %}
+            <tr>
+                <td> {{ tr[1] }} </td>
+                <td> {{ tr[2] }} </td>
+                {% for td in tr[3:] %}
+                    <td> {{ '{0:,.0f}'.format(td) }}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+
+{% endblock %}

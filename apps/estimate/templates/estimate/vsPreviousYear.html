@@ -1,0 +1,73 @@
+{% extends "estimate/base.html" %}
+{% block title %} 계획대비 실적(추정) {% endblock %}
+{% block content %}
+
+<div>
+    <div>
+        <h4>기간별 조회 - 전년대비</h4>
+        <form action="{{ url_for('est.vsPreviousYear') }}"
+            method="POST"
+            enctype="multipart/form-data"
+            novalidate="novalidate">
+            {{ form.csrf_token }}
+            <!-- <div>
+                <label>버전 : {{ form.version }}</label>
+                <p></p>
+            </div> -->
+            <div class="container-sm">
+            <table class="align-middle table-sm text-left">
+                <tbody>
+                    <tr>
+                        <td>법인</td>
+                        <td>
+                            <select name="ccode" class="Input">
+                                {% for comp in com_code %}
+                                <option value="{{ (comp, com_code[comp][0] ) }}">{{ com_code[comp][0] }}</option>
+                                {% endfor %}
+                            </select>
+                        </td>
+                        <td>년도</td>
+                        <td>
+                            <select name="year1" class="Input">
+                                {% for y in YYYY %}
+                                <option value="{{ y[0] }}">{{ y[0] }}</option>
+                                {% endfor %}
+                            </select>
+                        </td>
+                        <td>시작월</td>
+                        <td>
+                            <select name="month1" class="Input">
+                                {% for m in month_range %}
+                                <option value="{{ m }}">{{ m }}</option>
+                                {% endfor %}
+                            </select>
+                        </td>
+                        <td>종료월</td>
+                        <td>
+                            <select name="month2" class="Input">
+                                {% for m in month_range %}
+                                <option value="{{ m }}">{{ m }}</option>
+                                {% endfor %}
+                            </select>
+                        </td>
+                        <td>
+                            <div>
+                                <button type="submit" class="btn btn-primary"> 조회 </button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            </div>
+        </form>
+    </div>
+    <div>
+    
+
+{% endblock %}
+
+{% block content3 %}
+<div class="container">
+    {{ string2|safe }}
+</div>
+{% endblock %}

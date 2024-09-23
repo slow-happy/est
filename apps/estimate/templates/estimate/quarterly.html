@@ -1,0 +1,62 @@
+{% extends "estimate/base.html" %}
+{% block title %} 계획대비 실적(추정) {% endblock %}
+{% block content %}
+
+<div>
+    <div>
+        <h4>분기별(계획비)</h4>
+        <p>아직 만들기 전임 </p>
+        <form action="{{ url_for('est.upload_image') }}"
+            method="POST"
+            enctype="multipart/form-data"
+            novalidate="novalidate">
+            {{ form.csrf_token }}
+            <!-- <div>
+                <label>버전 : {{ form.version }}</label>
+                <p></p>
+            </div> -->
+            <div class="container-sm">
+            <table class="align-middle table-sm text-left">
+                <tbody>
+                    <tr>
+                        <td>년도</td>
+                        <td>
+                            <select name="year1" class="Input">
+                                {% for y in YYYY %}
+                                <option value="{{ y[0] }}">{{ y[0] }}</option>
+                                {% endfor %}
+                            </select>
+                        </td>
+                        <td>시작월</td>
+                        <td>
+                            <select name="month1" class="Input">
+                                {% for m in range(1,13) %}
+                                <option value="{{ m }}">{{ m }}</option>
+                                {% endfor %}
+                            </select>
+                        </td>
+                        <td>종료월</td>
+                        <td>
+                            <select name="month2" class="Input">
+                                {% for m in range(1,13) %}
+                                <option value="{{ m }}">{{ m }}</option>
+                                {% endfor %}
+                            </select>
+                        </td>
+                        <td>
+                            <div>
+                                <button type="submit" class="btn btn-primary"> 조회 </button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            </div>
+        </form>
+    </div>
+    <div>
+        내용이 나오는 곳
+    </div>
+    
+
+{% endblock %}

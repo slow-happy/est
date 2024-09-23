@@ -1,0 +1,202 @@
+{% extends "estimate/base.html" %}
+{% block title %} Estimate {% endblock %}
+
+{% block modal %}
+      <!-- Modal -->
+      <div class="modal fade " id="myModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+          <form action="{{ url_for('est.writeContents') }}"
+              method="POST"
+              novalidate="novalidate"
+             >
+            <div class="modal-header">
+            <h1 class="modal-title fs-5" id="staticBackdropLabel">특이사항 입력</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              
+                 {{ form_desc.csrf_token }}
+                <table class="table">
+                <tr>
+                <td>
+                <div>
+                <p>
+                {{form_desc.content.label}} {{ form_desc.content(placeholder="내용을 입력해 주세요")}}
+                </p>
+                 {% for error in form_desc.content.errors %}
+                     <span style="color: red">{{error}}</span>
+                 {% endfor %}
+                </div>
+                </td>
+                <td>
+                <div>
+                <p>
+                  {{form_desc.tot_amt.label}} {{ form_desc.tot_amt(placeholder="총금액을 넣어주세요")}}백만원
+                </p>
+                {% for error in form_desc.tot_amt.errors %}
+                    <span style="color: red">{{error}}</span>
+                {% endfor %}
+                </div>
+                </td>
+                </tr>
+                <tr>
+                    <td colspan="2">상세내용 입력</td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                    {{ form_desc.description(placeholder="상세내용을 입력해 주세요(선택)")}}
+                    </td>
+                </tr>
+                </table>
+                <br>
+
+                <!-- 월별금액 입력 부분 -->
+                <table class="table">
+                  <thead class="table-light">
+                      <td>1분기</td>
+                      <td>2분기</td>
+                      <td>3분기</td>
+                      <td>4분기</td>
+                  </thead>
+                  <tbody>
+                    <td>
+                      <div>
+                        {{form_desc.jan_amt.label}} {{ form_desc.jan_amt(placeholder="1월금액")}}
+                        </p>
+                        {% for error in form_desc.jan_amt.errors %}
+                            <span style="color: red">{{error}}</span>
+                        {% endfor %}
+                        {{form_desc.feb_amt.label}} {{ form_desc.feb_amt(placeholder="2월금액")}}
+                        </p>
+                        {% for error in form_desc.feb_amt.errors %}
+                            <span style="color: red">{{error}}</span>
+                        {% endfor %}
+                        {{form_desc.mar_amt.label}} {{ form_desc.mar_amt(placeholder="3월금액")}}
+                        </p>
+                        {% for error in form_desc.mar_amt.errors %}
+                            <span style="color: red">{{error}}</span>
+                        {% endfor %}
+                      </div>
+                    </td>
+                    <td>
+                      <div>
+                        {{form_desc.apr_amt.label}} {{ form_desc.apr_amt(placeholder="4월금액")}}
+                        </p>
+                        {% for error in form_desc.apr_amt.errors %}
+                            <span style="color: red">{{error}}</span>
+                        {% endfor %}
+                        {{form_desc.may_amt.label}} {{ form_desc.may_amt(placeholder="5월금액")}}
+                        </p>
+                        {% for error in form_desc.may_amt.errors %}
+                            <span style="color: red">{{error}}</span>
+                        {% endfor %}
+                        {{form_desc.jun_amt.label}} {{ form_desc.jun_amt(placeholder="6월금액")}}
+                        </p>
+                        {% for error in form_desc.jun_amt.errors %}
+                            <span style="color: red">{{error}}</span>
+                        {% endfor %}
+                      </div>
+                    </td>
+                    <td>
+                      <div>
+                        {{form_desc.jul_amt.label}} {{ form_desc.jul_amt(placeholder="7월금액")}}
+                        </p>
+                        {% for error in form_desc.jul_amt.errors %}
+                            <span style="color: red">{{error}}</span>
+                        {% endfor %}
+                        {{form_desc.aug_amt.label}} {{ form_desc.aug_amt(placeholder="8월금액")}}
+                        </p>
+                        {% for error in form_desc.aug_amt.errors %}
+                            <span style="color: red">{{error}}</span>
+                        {% endfor %}
+                        {{form_desc.sep_amt.label}} {{ form_desc.sep_amt(placeholder="9월금액")}}
+                        </p>
+                        {% for error in form_desc.sep_amt.errors %}
+                            <span style="color: red">{{error}}</span>
+                        {% endfor %}
+                      </div>
+                    </td>
+                    <td>
+                      <div>
+                        {{form_desc.oct_amt.label}} {{ form_desc.oct_amt(placeholder="10월금액")}}
+                        </p>
+                        {% for error in form_desc.oct_amt.errors %}
+                            <span style="color: red">{{error}}</span>
+                        {% endfor %}
+                        {{form_desc.nov_amt.label}} {{ form_desc.nov_amt(placeholder="11월금액")}}
+                        </p>
+                        {% for error in form_desc.nov_amt.errors %}
+                            <span style="color: red">{{error}}</span>
+                        {% endfor %}
+                        {{form_desc.dec_amt.label}} {{ form_desc.dec_amt(placeholder="12월금액")}}
+                        </p>
+                        {% for error in form_desc.dec_amt.errors %}
+                            <span style="color: red">{{error}}</span>
+                        {% endfor %}
+                      </div>
+                    </td>
+                  </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+            <button type="submit" class="btn btn-primary">입력</button>
+            </div>
+          </form>
+        </div>
+        </div>
+      </div>
+
+
+{% endblock%}
+
+{% block content %}
+    {{ string2|safe }}
+{% endblock %}
+{% block content2 %}
+    <div class="text-left">
+            
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
+            특별관리사항 추가
+        </button>
+        <div> <!-- 특별관리 사항 리스트 정리 list1 으로 받아옴-->
+            <table>
+                <tr>
+                    <th>내용</th><th></th><th></th>
+                    <th>금액(백만원)</th>
+                </tr>
+                {% for listDetail in list1 %}
+                
+                <tr>
+                    <td colspan="3" class="left-align"><a data-bs-toggle="modal" href="#myModal">{{ listDetail.content }}</a></td>
+                    <td>{{ '{0:,.0f}'.format(listDetail.amt_tot)}}</td>
+                </tr>
+                {% endfor %}
+            </table>
+
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascript1 %}
+    <!-- <script>
+        var exampleModal = document.getElementById('myModal')
+        exampleModal.addEventListener('show.bs.modal', function (event) {
+        // Button that triggered the modal
+        var button = event.relatedTarget
+        // Extract info from data-bs-* attributes
+        var recipient = button.getAttribute('data-bs-whatever')
+        // If necessary, you could initiate an AJAX request here
+        // and then do the updating in a callback.
+        //
+        // Update the modal's content.
+        var modalTitle = exampleModal.querySelector('.modal-title')
+        var modalBodyInput = exampleModal.querySelector('.modal-body input')
+
+        modalTitle.textContent = 'New message to ' + recipient
+        modalBodyInput.value = recipient
+        })
+    </script> -->
+{% endblock %}

@@ -1,0 +1,125 @@
+{% extends "estimate/base.html" %}
+{% block title %} 버전관리 {% endblock %}
+{% block content %}
+<div class="mx-auto dt-auth-main">
+    <div class="card dt-auth-signup">
+        <header><h2>추정버전생성</h2></header>
+        <section>
+            <form action="{{ url_for('est.manageVersion', next=request.args.get('next')) }}"
+            method="POST"
+            class="form-signin"
+            >
+                {% for message in get_flashed_messages() %}
+                <div class="dt-auth-flash">{{message}}</div>
+                {% endfor %}
+                {{ form.csrf_token }}
+                <!-- {{ form.year1(size=4, class="form-control dt-auth-input", placeholder="추정년도") }}
+                {{ form.month1(size=2, class="form-control dt-auth-input", placeholder="추정월") }}
+                {{ form.version(size=6, class="form-control dt-auth-input", placeholder="버전") }}-->
+                <div>
+                    <select class="Input" aria-label="Small select example" id="year1" name="year1">
+                        <option selected>추정년도</option>
+                        <option value="2023">2023년</option>
+                        <option value="2024">2024년</option>
+                        <option value="2025">2025년</option>
+                    </select>
+                    <select class="Input" aria-label="Small select example" id="month1" name="month1">
+                        <option selected>추정월</option>
+                        <option value="00">계획</option>
+                        <option value="99">실적</option>
+                        <option value="01">1월</option>
+                        <option value="02">2월</option>
+                        <option value="03">3월</option>
+                        <option value="04">4월</option>
+                        <option value="05">5월</option>
+                        <option value="06">6월</option>
+                        <option value="07">7월</option>
+                        <option value="08">8월</option>
+                        <option value="09">9월</option>
+                        <option value="10">10월</option>
+                        <option value="11">11월</option>
+                        <option value="12">12월</option>
+                    </select>
+                    <select class="Input" aria-label="Small select example" id="month2" name="month2">
+                        <option selected>추정종료월</option>
+                        <option value="01">1월</option>
+                        <option value="02">2월</option>
+                        <option value="03">3월</option>
+                        <option value="04">4월</option>
+                        <option value="05">5월</option>
+                        <option value="06">6월</option>
+                        <option value="07">7월</option>
+                        <option value="08">8월</option>
+                        <option value="09">9월</option>
+                        <option value="10">10월</option>
+                        <option value="11">11월</option>
+                        <option value="12">12월</option>
+                    </select>
+                    <select class="Input" aria-label="Small select example" id="version" name="version">
+                        <option selected>버전</option>
+                        <option value="(A)">실적</option>
+                        <option value="(P)">계획</option>
+                        <option value="1st">1차</option>
+                        <option value="2nd">2차</option>
+                        <option value="3rd">3차</option>
+                        <option value="4th">4차</option>
+                        <option value="5th">5차</option>
+                        <option value="6th">6차</option>
+                        <option value="7th">7차</option>
+                        <option value="8th">8차</option>
+                        <option value="9th">9차</option>
+                        <option value="10th">10차</option>
+                    </select>
+                </div>    
+                {{ form.submit(class="btn btn-md btn-primary btn-block dt-auth-btn") }} 
+            </form>
+            <br><br>
+        </section> 
+        <h2>시스템운영버전선택</h2>
+        <p>여기에 선택된 버전으로 기본 조회됨.</p>
+        <section>
+            <form action="{{ url_for('est.setControls') }} "
+            method="POST"
+            class="form-signin">
+                {% for message in get_flashed_messages() %}
+                <div class="dt-auth-flash">{{message}}</div>
+                {% endfor %}
+                {{ form.csrf_token }}
+                <select name="ccode" class="Input">
+                    {% for comp in com_code %}
+                    <option value="{{ (comp,com_code[comp][1]) }}">{{ com_code[comp][0] }}</option>
+                    {% endfor %}
+                </select>
+                <!-- <select name="year1" class="Input">
+                    {% for y in YYYY %}
+                    <option value="{{ y[0] }}">{{ y[0] }}</option>
+                    {% endfor %}
+                </select>
+                <select class="Input" name="selectedMM">
+                    <option selected>실적월</option>
+                    <option value="01">1월</option>
+                    <option value="02">2월</option>
+                    <option value="03">3월</option>
+                    <option value="04">4월</option>
+                    <option value="05">5월</option>
+                    <option value="06">6월</option>
+                    <option value="07">7월</option>
+                    <option value="08">8월</option>
+                    <option value="09">9월</option>
+                    <option value="10">10월</option>
+                    <option value="11">11월</option>
+                    <option value="12">12월</option>
+                </select> -->
+                <select name="ver" class="Input">
+                    {% for ver in ver1 %}
+                    <option value="{{ ver[0] }}">{{ ver[0] }}</option>
+                    {% endfor %}
+                </select>
+                <p></p>
+                <button type="submit" class="btn btn-primary"> 시스템메인버전 선택 </button>
+            </form>
+        </section>
+                 
+    </div>
+</div>
+{% endblock %}

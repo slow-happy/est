@@ -1,0 +1,53 @@
+{% extends "estimate/base.html" %}
+{% block title %} upload sales figure {% endblock %}
+{% block content %}
+<div>
+    <h4>판매실적입력</h4>
+    <p>업로드하려는 파일을 선택해 주세요</p>
+    <form action="{{ url_for('stream.uploadSales') }}"
+        method="POST"
+        enctype="multipart/form-data"
+        novalidate="novalidate">
+        {{ form.csrf_token }}
+        <!-- <div>
+            <label>버전 : {{ form.version }}</label>
+            <p></p>
+        </div> -->
+        <div>
+            <select name="ver" class="Input">
+                {% for ver in ver1 %}
+                <option value="{{ ver[0] }}">{{ ver[0] }}</option>
+                {% endfor %}
+            </select>
+            <p></p>
+        </div>
+        
+        <select name="year1" class="Input">
+            {% for y in YYYY %}
+            <option value="{{ y[0] }}">{{ y[0] }}</option>
+            {% endfor %}
+        </select>
+        <p></p>
+
+        <div>
+            <label>
+                <span>{{ form.image(class="form-control-file") }}</span>
+            </label>
+            <p></p>
+        </div>
+        {% for error in form.image.errors %}
+        <span style="color: red;">{{error}}</span>
+        {% endfor %}
+        <hr />
+        <div>
+            <button type="submit" class="btn btn-primary"> 판매계획입력 </button>
+        </div>
+        <br><br>
+    </form>
+</div>
+
+
+여기쯤 하고 있습니다. 
+
+
+{% endblock %}

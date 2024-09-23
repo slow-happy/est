@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <!-- 타이틀에 해당하는 것을 블럭화한다. -->
+    <title>{% block title %}{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"  />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/app.css')}}" />
+
+</head>
+
+<body>
+  <!-- 네비게이션 바를 작성한다. -->
+
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="{{ url_for('est.index')}}">금호타이어 손익추정 시스템</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              {% if current_user.is_authenticated %}
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="{{ url_for('est.index')}}">Home</a>
+            </li>
+
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                조회
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item" href="{{ url_for('est.viewPlan')}}">계획조회</a></li>
+                <li><a class="dropdown-item" href="{{ url_for('est.viewActual')}}">실적조회</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="{{ url_for('est.vsPlan')}}">기간별조회-계획대비</a></li>
+                <li><a class="dropdown-item" href="{{ url_for('est.vsPreviousYear')}}">기간별조회-전년대비</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="{{ url_for('est.quarterly')}}">분기별조회-실적</a></li>
+                <li><a class="dropdown-item" href="{{ url_for('est.quarterly')}}">분기별조회-계획</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="{{ url_for('est.entity')}}">법인별</a></li>
+              </ul>
+              </li>
+              <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    입력
+                  </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <li><a class="dropdown-item" href="{{ url_for('est.upload_image')}}">법인별I/S등록</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" href="{{ url_for('est.salesPlan')}}">판매계획입력</a>
+                    <li><a class="dropdown-item" href="{{ url_for('stream.uploadSales')}}">영업실적입력</a>
+                    <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" href="{{ url_for('est.elimination')}}">연결조정사항입력</a>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" href="{{ url_for('est.exchangeRate')}}">환율조회/입력</a></li>
+                </ul>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  관리자
+                </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item" href="{{ url_for('est.executeFX')}}">환율환산</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="{{ url_for('est.sumIS')}}">단순합산</a>
+                  <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="{{ url_for('est.consolidating')}}">연결실시</a>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="{{ url_for('est.manageVersion')}}">버전관리</a>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="{{ url_for('stream.salesMaster')}}">조직마스터입력</a>
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('auth.logout')}}">로그아웃</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">{{ current_user.username}}</a>
+            </li>
+            {% else %}
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('auth.signup')}}">신규등록</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('auth.login')}}">로그인</a>
+            </li>
+            {% endif %}
+          </ul>
+          <form class="d-flex">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+          </form>
+        </div>
+      </div>
+    </nav>
+    {% block modal %}{% endblock %}
+  <!-- body contents를 상속처에서 구현한다.-->
+  <!-- block content를 section class로 둘러싼다.-->
+  <div class="container-fluid">
+      <!-- 이미지 업로드 화면으로의 링크를 추가한다. -->
+      <!-- <div class="col-md-10 text-right dt-image-register-btn">
+          <a href="{{ url_for('est.upload_image') }}" class="btn btn-primary">
+              법인별 Income statement 등록
+          </a>
+      </div> -->
+      <table class="table table-borderless">
+          <tbody>
+          <tr>
+              <td class="col-md-8">
+                  <div class="container-fluid">{% block content %}{% endblock %}</div>  
+              </td>
+              <td class="col-md-4">
+                {% block content2 %}{% endblock %}
+              </td>
+          </tr>
+          </tbody>
+      </table>
+      <!-- <div class="row"> -->
+          <!-- <div class="col-md-8">}</div> -->
+      <!-- </div>       -->
+  </div>
+    {% block content3 %}{% endblock %}
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.slim.min.js" integrity="sha512-5NqgLBAYtvRsyAzAvEBWhaW+NoB+vARl6QiA02AFMhCWvPpi7RWResDcTGYvQtzsHVCfiUhwvsijP+3ixUk1xw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js" integrity="sha512-XtmMtDEcNz2j7ekrtHvOVR4iwwaD6o/FUJe6+Zq+HgcCsk3kj4uSQQR8weQ2QVj1o0Pk6PwYLohm206ZzNfubg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="{{ url_for('static', filename='js/app.js')}}"></script>
+
+  {% block javascript1 %}
+  {% endblock %}
+</body>
+</html>

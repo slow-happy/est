@@ -1,0 +1,15 @@
+.crud{
+    font-style: italic;
+}
+
+table{
+    /* 인접하는 border를 겹쳐서 1개로 표시*/
+    border-collapse: collapse;
+}
+
+table, th, td {
+    /* 1px의 회색 실선으로 설정한다. */
+    border-color: #b91010;
+    border-width: 1px;
+    border-style: solid;
+}

@@ -1,0 +1,83 @@
+{% extends "estimate/base.html" %}
+{% block title %} estimate {% endblock %}
+{% block content %}
+<div>
+    <h4>법인별 I/S등록</h4>
+    <p>업로드하려는 파일을 선택해 주세요</p>
+    <form action="{{ url_for('est.upload_image') }}"
+        method="POST"
+        enctype="multipart/form-data"
+        novalidate="novalidate">
+        {{ form.csrf_token }}
+        <!-- <div>
+            <label>버전 : {{ form.version }}</label>
+            <p></p>
+        </div> -->
+        <div>
+            <select name="ccode" class="Input">
+                {% for comp in com_code %}
+                <option value="{{ (comp,com_code[comp][1]) }}">{{ com_code[comp][0] }}</option>
+                {% endfor %}
+            </select>
+            <p></p>
+            <select name="year1" class="Input">
+                {% for y in YYYY %}
+                <option value="{{ y[0] }}">{{ y[0] }}</option>
+                {% endfor %}
+            </select>
+            <select class="Input" aria-label="Small select example" id="month1" name="month1">
+                <option selected>추정시작월</option>
+                <option value="00">계획</option>
+                <option value="99">실적</option>
+                <option value="01">1월</option>
+                <option value="02">2월</option>
+                <option value="03">3월</option>
+                <option value="04">4월</option>
+                <option value="05">5월</option>
+                <option value="06">6월</option>
+                <option value="07">7월</option>
+                <option value="08">8월</option>
+                <option value="09">9월</option>
+                <option value="10">10월</option>
+                <option value="11">11월</option>
+                <option value="12">12월</option>
+            </select>
+            <select class="Input" aria-label="Small select example" id="month1" name="month2">
+                <option selected>추정종료월</option>
+                <option value="01">1월</option>
+                <option value="02">2월</option>
+                <option value="03">3월</option>
+                <option value="04">4월</option>
+                <option value="05">5월</option>
+                <option value="06">6월</option>
+                <option value="07">7월</option>
+                <option value="08">8월</option>
+                <option value="09">9월</option>
+                <option value="10">10월</option>
+                <option value="11">11월</option>
+                <option value="12">12월</option>
+            </select>
+            <p></p>
+            <select name="ver" class="Input">
+                {% for ver in ver1 %}
+                <option value="{{ ver[0] }}">{{ ver[0] }}</option>
+                {% endfor %}
+            </select>
+            <p></p>
+        </div>
+
+        <div>
+            <label>
+                <span>{{ form.image(class="form-control-file") }}</span>
+            </label>
+        </div>
+        {% for error in form.image.errors %}
+        <span style="color: red;">{{error}}</span>
+        {% endfor %}
+        <hr />
+        <div>
+            <label> {{ form.submit(class="btn btn-primary") }}</label>
+        </div>
+    </form>
+</div>
+{% endblock %}

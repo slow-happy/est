@@ -1,17 +1,17 @@
 from pathlib import Path
 
 basedir = Path(__file__).parent.parent
-user1 = "superpower"
-pw1 = "mecha75"
-ip1 = "192.168.0.10:63306"
-# ip1 = "192.168.0.20"
+user1 = ""
+pw1 = ""
+ip1 = "192.168.0.10:3306"
+
 db1 = "flaskbook"
 mysql_url = f"mysql+pymysql://{user1}:{pw1}@{ip1}/{db1}?charset=utf8"
 
 # Base config클래스 작성하기
 class BaseConfig:
-    SECRET_KEY = "skwjdtlrDLdoqdmfaksemfrhdlTek"
-    WTF_CSRF_SECRET_KEY="lDAJKSEKNFdienfksudfk"
+    SECRET_KEY = "skwjdtlrDLdoqasadrhdlTek"
+    WTF_CSRF_SECRET_KEY="lDAJadasadFdienfksudfk"
     # 이미지 업로드 경로에 apps/images를 지정한다.
     UPLOAD_FOLDER = str(Path(basedir,"apps","uploadfiles/est"))
     # UPLOAD_FOLDER_fx = str(Path(basedir,"apps","uploadfiles/fx"))
